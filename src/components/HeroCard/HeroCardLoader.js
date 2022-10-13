@@ -4,50 +4,42 @@ import { Card } from '../../common-components/Card/Card';
 import { Caption } from '../../common-components/Caption/Caption';
 import { Description } from '../../common-components/Description/Description';
 import { HeadingTwo } from '../../common-components/HeadingTwo/HeadingTwo';
-import { ButtonLink } from '../../common-components/ButtonLink/ButtonLink';
-import {
-	BorderRadiuses,
-	Colors,
-	Shadows,
-	Spaces,
-} from '../../shared/DesignTokens';
+import { BorderRadiuses, Colors, Spaces } from '../../shared/DesignTokens';
+import Skeleton from 'react-loading-skeleton';
 const InformationGrid = styled(Box)`
 	display: grid;
 	grid-template-columns: 1fr 70px;
 	gap: ${Spaces.TWO};
 `;
-const HeroAvatar = styled.div`
+const HeroAvatarSkeleton = styled(Skeleton)`
 	width: 100%;
 	height: 70px;
-	box-shadow: ${Shadows.ONE};
 	border-radius: ${BorderRadiuses.ONE};
-	background-image: url('${(props) => props.src}');
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-position: center;
 `;
-export function HeroCard({ secretIdentity, name, picture, universe, id }) {
+export function HeroCardLoader() {
 	return (
 		<Card>
 			<InformationGrid p={Spaces.TWO} mb={Spaces.ONE_HALF}>
 				<Box>
 					<Caption as="div" color={Colors.GRAY_600}>
-						{secretIdentity}
+						<Skeleton />
 					</Caption>
 					<Box mb={Spaces.ONE}>
-						<HeadingTwo>{name}</HeadingTwo>
+						<HeadingTwo>
+							<Skeleton />
+						</HeadingTwo>
 					</Box>
 					<Description as="div" color={Colors.GRAY_700}>
-						<strong>Universo:</strong> {universe}
+						<Skeleton />
 					</Description>
 					<Description as="div" color={Colors.GRAY_700}>
-						<strong>Nota atual:</strong> -
+						<Skeleton />
 					</Description>
 				</Box>
-				<HeroAvatar src={picture} />
+				<HeroAvatarSkeleton />
 			</InformationGrid>
-			<Box width="87px">
-				<ButtonLink to={`/detalhes/${id}`}>Ver Mais</ButtonLink>
+			<Box width="87px" py={Spaces.ONE} px={Spaces.TWO}>
+				<Skeleton />
 			</Box>
 		</Card>
 	);
