@@ -1,5 +1,3 @@
-import useAxios from 'axios-hooks';
-import axios from 'axios';
 import React from 'react';
 import { Flex, Box } from 'reflexbox';
 import styled from 'styled-components';
@@ -22,31 +20,13 @@ const HeroesGrid = styled(Box) `
 		gap: ${Spaces.TWO};
 	}
 `;
-
-// async function searchHero(heroName) {
-// 	const {
-// 		data
-// 	} = await axios.get(`/search/${heroName}`, {
-// 		baseURL: `${process.env.REACT_APP_SUPER_HERO_API_BASE_URL}/${process.env.REACT_APP_SUPER_HERO_API_KEY}`,
-// 	});
-// 	return data.results || [];
-// }
-
 	export function Search() {
 			const [search, setSearch] = React.useState({
 			value: 'captain',
 			doSearch: false
 		});	
 
-			
-	const [{data: heroes, loading: isLoadingHeroes}, searchHero] = useAxios(
-		`search/${search.value}`,
-		{ manual: true}
-	)
-
-	React.useEffect(() => {
-		searchHero();
-	}, []);
+	const { heroes, isLoadingHeroes, searchHero} = useHeroes(search.value)	
 
 	React.useEffect(() =>{
 		if (search.doSearch) {

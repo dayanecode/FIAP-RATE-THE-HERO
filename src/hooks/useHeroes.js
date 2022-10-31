@@ -1,5 +1,6 @@
 import React from "react";
 import useAxios from "axios-hooks";
+
 export function useHeroes (searchValue) {
 const [{ data: heroes, loading: isLoadingHeroes }, searchHero] = useAxios (
     `/search/${searchValue}`,
@@ -8,5 +9,9 @@ const [{ data: heroes, loading: isLoadingHeroes }, searchHero] = useAxios (
 React.useEffect(() => {
 	searchHero();
 }, []);
+
     return {heroes, isLoadingHeroes, searchHero };
+    
 }
+
+

@@ -40,9 +40,9 @@ export function Details() {
 	const navigate = useNavigate();
     const { id } = useParams();
     const { hero, isLoadingHero } = useHero(id);
-	// const handleBack = () => {
-	// 	navigate.goBack();
-	// };
+	const handleBack = () => {
+		navigate.goBack();
+	};
 
 	return (
         !isLoadingHero && (
@@ -95,7 +95,7 @@ export function Details() {
 							<Caption>Local de Nascimento</Caption>
 						</Box>
 						<Description color={Colors.GRAY_700}>
-							Brooklyn - NY
+							{hero.biography['place-of-birth']}
 						</Description>
 					</Box>
 				</Card>
@@ -105,7 +105,7 @@ export function Details() {
 							<Caption>Primeira HQ</Caption>
 						</Box>
 						<Description color={Colors.GRAY_700}>
-							Captain America Comics #1
+							{hero.biography['first-appearance']}
 						</Description>
 					</Box>
 				</Card>
@@ -115,17 +115,17 @@ export function Details() {
 							<Caption>Informações Biológicas</Caption>
 						</Box>
 						<Description color={Colors.GRAY_700}>
-							<strong>Genero: </strong> Masculino
+							<strong>Genero: </strong> {hero.appearance.gender}
 							<br />
-							<strong>Raça: </strong> Humano
+							<strong>Raça: </strong> {hero.appearance.race}
 							<br />
-							<strong>Altura: </strong> 1,88 m
+							<strong>Altura: </strong> {hero.appearance.height[1]}
 							<br />
-							<strong>Peso: </strong> 95 kg
+							<strong>Peso: </strong> {hero.appearance.weight[1]}
 							<br />
-							<strong>Cor do olho: </strong> Azul
+							<strong>Cor do olho: </strong> {hero.appearance['eye-color']}
 							<br />
-							<strong>Cor do cabelo: </strong> Loiro
+							<strong>Cor do cabelo: </strong> {hero.appearance['hair-color']}
 						</Description>
 					</Box>
 				</Card>
@@ -135,24 +135,31 @@ export function Details() {
 							<Caption>Atributos</Caption>
 						</Box>
 						<Description color={Colors.GRAY_700}>
-							<strong>Força: </strong> 100
+							<strong>Força: </strong> {''}	
+							{hero.powerstats.strength}
 							<br />
-							<strong>Inteligência: </strong> 100
+							<strong>Inteligência: </strong> {''}
+							{hero.powerstats.intelligence}
 							<br />
-							<strong>Velocidade: </strong> 100
+							<strong>Velocidade: </strong> {''}
+							{hero.powerstats.speed}
 							<br />
-							<strong>Resistência: </strong> 100
+							<strong>Resistência: </strong> {''}
+							{hero.powerstats.durability}
 							<br />
-							<strong>Poder: </strong> 100
+							<strong>Poder: </strong> {''}
+							{hero.powerstats.power}	
 							<br />
-							<strong>Combate: </strong> 100
+							<strong>Combate: </strong> {''}
+							{hero.powerstats.combat}
 						</Description>
 					</Box>
 				</Card>
 			</DetailsGrid>
 			<Flex width="100%" justifyContent="center" mt={Spaces.FIVE}>
 				<Box>
-					<Button ghost>
+					{/* <Button ghost> */}
+					<Button ghost onClick={handleBack}>
 						Voltar
 					</Button>
 				</Box>
