@@ -17,8 +17,8 @@ export function App() {
 
   return (
   <>
-    <NormalizeStyles />
-    <BrowserRouter>
+    < NormalizeStyles />
+    <BrowserRouter>    
       <Header />
       <Routes>
         <Route path='/detalhes/:id' element={<Details/>} />

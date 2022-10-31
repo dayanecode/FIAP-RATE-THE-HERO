@@ -28,8 +28,6 @@ export const Alert = styled.div`
 	border-radius: ${BorderRadiuses.ONE};
 	color: ${(props) => colorMapper[props.type].color};
 	background-color: ${(props) => colorMapper[props.type].backgroundColor};
-    padding: ${(props) => props.small, Spaces.ONE} ${Spaces.ONE_HALF};	
+    padding: ${(props) => props.small && Spaces.ONE} ${Spaces.ONE_HALF};
 	font-size: ${(props) => props.small ? FontSizes.ONE_QUARTER : FontSizes.TWO};
 `;
-//O Padding Não funcionou sem a vírgula após o small e contendo o &amp; &amp
-// padding: ${(props) => props.small &amp; &amp; Spaces.ONE} ${Spaces.ONE_HALF};
