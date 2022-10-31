@@ -44,32 +44,17 @@ const HeroesGrid = styled(Box) `
 		{ manual: true}
 	)
 
-	// const { heroes, isLoadingHeroes, searchHero } = useHeroes(search.value);
-
-
-	// React.useEffect(() => {
-	// 		if (search.doSearch) {
-	// 			searchHero().then(() => {				
-	// 				setSearch((prevValue) => ({ ...prevValue, doSearch: false }));
-	// 			});
-	// 		}
-	// 	}, [search]);
-
-
-	// React.useEffect( () =>{
-	// 		if (search.doSearch) {
-	// 			searchHero(search.value).then((heroes) => {
-	// 				setHeroes(heroes);
-	// 				setSearch((prevValue) => ({ ...prevValue, doSearch: false}));
-	// 			});
-	// 		}
-
-	// }, [search]);
-
 	React.useEffect(() => {
 		searchHero();
 	}, []);
 
+	React.useEffect(() =>{
+		if (search.doSearch) {
+			searchHero().then(() => {
+				setSearch((prevValue) => ({ ...prevValue, doSearch: false}));
+			});
+		}
+	}, [search]);
 	
 	function handleUpdateSearchValue({ target: { value } }) {
 		setSearch((prevValue) => ({ ...prevValue, value }));
@@ -134,11 +119,8 @@ const HeroesGrid = styled(Box) `
 								key={hero.id}
 								id={hero.id}
 								secretIdentity={hero.biography['full-name']}
-								// secretIdentity={hero.secretIdentity}
 								name={hero.name}
 								picture={hero.image.url}
-								// picture={hero.picture}
-								// universe={hero.universe}
 								universe={hero.biography.publisher}
 							/>
 						))}
