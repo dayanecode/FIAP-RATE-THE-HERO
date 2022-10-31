@@ -17,7 +17,7 @@ export function App() {
 
   return (
   <>
-    < NormalizeStyles />
+    <NormalizeStyles />
     <BrowserRouter>    
       <Header />
       <Routes>
