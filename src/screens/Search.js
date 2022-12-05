@@ -66,12 +66,10 @@ async function searchHero(heroName) {
 				<Box flexGrow="1">
 					<SearchField
 						placeholder="Digite um nome de herói ou heroína"
-						// onKeyUp={handleUpdateSearchValue}
 					/>
 				</Box>
 				<Box ml={Spaces.TWO}>
 					<Button >Buscar</Button>
-					{/* <Button onClick={handleSearch}>Buscar</Button> */}
 				</Box>
 			</Flex>
 			{heroes && (
@@ -81,11 +79,8 @@ async function searchHero(heroName) {
 								key={hero.id}
 								id={hero.id}
 								secretIdentity={hero.biography['full-name']}
-								// secretIdentity={hero.secretIdentity}
 								name={hero.name}
 								picture={hero.image.url}
-								// picture={hero.picture}
-								// universe={hero.universe}
 								universe={hero.biography.publisher}
 							/>
 						))}
