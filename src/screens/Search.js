@@ -1,18 +1,20 @@
-import axios from 'axios';
-import useAxios from 'axios-hooks';
 import React from 'react';
 import { Flex, Box } from 'reflexbox';
 import styled from 'styled-components';
 import { Button } from '../common-components/Button/Button';
+import { Alert } from '../common-components/Alert/Alert';
 import { SearchField } from '../common-components/SearchField/SearchField';
 import { HeroCard } from '../components/HeroCard/HeroCard';
-import { HeroCardLoader } from '../components/HeroCard/HeroCardLoader';
+import { useHeroes } from '../hooks/useHeroes';
 import { Spaces } from '../shared/DesignTokens';
+import { HeroCardLoader } from '../components/HeroCard/HeroCardLoader';
+
 
 const HeroesGrid = styled(Box) `
 	display: grid;
 	grid-template-columns: 1fr;
 	gap: ${Spaces.ONE_HALF};
+	
 	@media (min-width: 1024px) {
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 		gap: ${Spaces.TWO};
@@ -27,7 +29,6 @@ async function searchHero(heroName) {
 }
 
 export function Search() {
-	
 	const [heroesOld, setHeroes] = React.useState([]);
 	const [search, setSearch] = React.useState({
 		value: 'captain',
@@ -38,15 +39,12 @@ export function Search() {
 		{manual: true}
 	);
 
-	React.useEffect(() => {
-		searchHero();
-	}, []);
+	const { heroes, isLoadingHeroes, searchHero} = useHeroes(search.value)	
 
-	React.useEffect(() => {
+	React.useEffect(() =>{
 		if (search.doSearch) {
-			searchHero(search.value).then((heroes) => {
-				setHeroes(heroesOld);
-				setSearch((prevValue) => ({ ...prevValue, doSearch: false }));
+			searchHero().then(() => {
+				setSearch((prevValue) => ({ ...prevValue, doSearch: false}));
 			});
 		}
 	}, [search]);
@@ -77,28 +75,38 @@ export function Search() {
 					<Button onClick={handleSearch}>Buscar</Button>
 				</Box>
 			</Flex>
-			{!isLoadingHeroes && heroes && heroes.error ? (
-				<Box
-					px={[Spaces.ONE, Spaces.TWO]}
-					pb={[Spaces.ONE, Spaces.TWO]}
+
+
+			{isLoadingHeroes && heroes && heroes.error ? (
+
+			<Box
+				px={[Spaces.ONE, Spaces.TWO]}
+				pb={[Spaces.ONE, Spaces.TWO]}
+			>
+				<Alert type="info">
+					Nenhum registro de herói ou heroína foi encontrado.
+				</Alert>
+			</Box>
+
+		): (
+			<HeroesGrid
+				px={[Spaces.ONE, Spaces.TWO]}
+				pb={[Spaces.ONE, Spaces.TWO]}
 				>
-					{/* <Alert type="info">
-						Nenhum registro de herói ou heroína foi encontrado.
-					</Alert> */}
-				</Box>
-			) : (
-				<HeroesGrid
-					px={[Spaces.ONE, Spaces.TWO]}
-					pb={[Spaces.ONE, Spaces.TWO]}
-				>
+
 					{isLoadingHeroes && (
 						<>
 							<HeroCardLoader />
 							<HeroCardLoader />
 							<HeroCardLoader />
 							<HeroCardLoader />
+							<HeroCardLoader />
+							<HeroCardLoader />
+							<HeroCardLoader />
+							<HeroCardLoader />
 						</>
 					)}
+
 					{!isLoadingHeroes && heroes && heroes.results.map((hero) => (
 							<HeroCard
 								key={hero.id}
