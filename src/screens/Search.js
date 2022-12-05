@@ -27,6 +27,7 @@ async function searchHero(heroName) {
 }
 
 export function Search() {
+	
 	const [heroesOld, setHeroes] = React.useState([]);
 	const [search, setSearch] = React.useState({
 		value: 'captain',
