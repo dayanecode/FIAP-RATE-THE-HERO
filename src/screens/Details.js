@@ -17,6 +17,10 @@ import { Card } from '../common-components/Card/Card';
 import { Caption } from '../common-components/Caption/Caption';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useHero } from '../hooks/useHero';
+import { useFormik} from 'formik';
+import  * as yup  from 'yup';
+import { Alert } from '../common-components/Alert/Alert';
+
 const Container = styled.aside`
 	width: 727px;
 	margin: 0 auto;
@@ -39,7 +43,22 @@ const DetailsGrid = styled.section`
 export function Details() {
 	const navigate = useNavigate();
     const { id } = useParams();
-    const { hero, isLoadingHero } = useHero(id);
+    const { hero, isLoadingHero, getHeroAvaliation, setHeroAvaliation} = useHero(id);
+	const formik = useFormik ({
+		initialValues: getHeroAvaliation(id) || { avaliation: '' },
+		validationSchema: yup.object().shape({
+			avaliation: yup.string().required(),
+		}),
+		onSubmit: (values) => {
+			setHeroAvaliation({id, ...values})
+
+			alert('Nota atribuída com sucesso!');
+
+			navigate('/')
+		},
+	});
+
+
 	const handleBack = () => {
 		navigate.goBack();
 	};
@@ -55,8 +74,15 @@ export function Details() {
 					height={194}
 					ml={Spaces.SEVEN}
 				>
+				<form onSubmit={formik.handleSubmit} noValidations>
 					<Flex>
-						<SelectField name='avaliation' required>
+						<SelectField 
+							onChange={formik.handleChange}
+							name='avaliation'
+							//o value é que é o E...........stado por trás do React
+							value={formik.values.avaliation} 
+							required
+						>
 							<Option value="" selected disabled>
 								Selecione a nota
 							</Option>
@@ -70,6 +96,14 @@ export function Details() {
 							<Button type='submit'>Atribuir</Button>
 						</Box>
 					</Flex>
+					{formik.errors.avaliation && (
+						<Box ml={Spaces.THREE}>
+							<Alert type="error">
+								Escolha uma nota para ser atribuída
+							</Alert>
+						</Box>
+					)}
+				</form>
 				</Flex>
 			</Flex>
 			<Box my={Spaces.ONE_HALF} as="section">
@@ -158,7 +192,6 @@ export function Details() {
 			</DetailsGrid>
 			<Flex width="100%" justifyContent="center" mt={Spaces.FIVE}>
 				<Box>
-					{/* <Button ghost> */}
 					<Button ghost onClick={handleBack}>
 						Voltar
 					</Button>

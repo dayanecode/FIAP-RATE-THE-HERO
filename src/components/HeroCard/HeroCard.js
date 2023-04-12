@@ -11,6 +11,7 @@ import {
 	Shadows,
 	Spaces,
 } from '../../shared/DesignTokens';
+import { useHero } from '../../hooks/useHero';
 const InformationGrid = styled(Box)`
 	display: grid;
 	grid-template-columns: 1fr 70px;
@@ -27,6 +28,9 @@ const HeroAvatar = styled.div`
 	background-position: center;
 `;
 export function HeroCard({ secretIdentity, name, picture, universe, id }) {
+	const {getHeroAvaliation} = useHero();
+	const heroAvaliation = getHeroAvaliation(id);
+
 	return (
 		<Card>
 			<InformationGrid p={Spaces.TWO} mb={Spaces.ONE_HALF}>
@@ -41,7 +45,7 @@ export function HeroCard({ secretIdentity, name, picture, universe, id }) {
 						<strong>Universo:</strong> {universe}
 					</Description>
 					<Description as="div" color={Colors.GRAY_700}>
-						<strong>Nota atual:</strong> -
+						<strong>Nota atual:</strong> {heroAvaliation?.avaliation || '-' }
 					</Description>
 				</Box>
 				<HeroAvatar src={picture} />
